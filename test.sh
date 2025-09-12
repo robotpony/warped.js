@@ -13,13 +13,13 @@ sleep 2
 
 # Open browser (works on macOS, Linux, Windows)
 if command -v open > /dev/null; then
-    open http://localhost:8000/test.html
+    open http://localhost:8000/
 elif command -v xdg-open > /dev/null; then
-    xdg-open http://localhost:8000/test.html
+    xdg-open http://localhost:8000/
 elif command -v start > /dev/null; then
-    start http://localhost:8000/test.html
+    start http://localhost:8000/
 else
-    echo "Please open http://localhost:8000/test.html in your browser"
+    echo "Please open http://localhost:8000/ in your browser"
 fi
 
 echo "Server running with PID $SERVER_PID"

@@ -1,27 +1,112 @@
 # warped.js
 
-A simple script for my weblog, for fun visual improvements, and branding.
+A lightweight vanilla JavaScript library for weblog theming and visual enhancement. Provides rainbow link colorization and decorative branding elements without any external dependencies.
+
+## Installation
+
+Include the script in your HTML page:
+
+```html
+<script src="warped.js"></script>
+```
+
+The script will automatically initialize when the DOM is ready.
+
+## Usage
+
+warped.js automatically targets specific elements in your HTML:
+
+```html
+<!-- These links will be colorized -->
+<article>
+  <p><a href="#">Article paragraph link</a></p>
+  <ul>
+    <li><a href="#">Article list link</a></li>
+  </ul>
+</article>
+
+<header>
+  <p class="description"><a href="#">Header description link</a></p>
+</header>
+```
 
 ## Features
 
-* Debug logging system - Conditional console logging controlled by debug flag
-* Brand bar creation - Adds decorative flourish bars at top and bottom of page with horizontal lines
-* Rainbow link colorization - Applies gradient HSL colors to article and header links
-* Interactive hover effects - Links change color intensity on mouseover/mouseout
-* Automatic color distribution - Calculates hue increments based on total number of links
-* Selective targeting - Specifically targets links in articles, lists, and header descriptions
-* Vanilla JavaScript implementation - No external dependencies or frameworks
-* Semantic HTML enhancement - Adds visual improvements without breaking existing structure
-* Weblog theming focus - Designed specifically for blog/weblog visual branding
+* **Rainbow Link Colorization** - Applies gradient HSL colors to targeted links
+* **Interactive Hover Effects** - Links intensify color on mouseover
+* **Decorative Brand Bars** - Adds flourish elements to top and bottom of page
+* **Automatic Color Distribution** - Evenly distributes colors across all links
+* **Selective Targeting** - Only affects `article p>a`, `article li>a`, and `header p.description a`
+* **Zero Dependencies** - Pure vanilla JavaScript implementation
+* **Semantic HTML** - Enhances existing structure without breaking it
 
-## Tech
+## Configuration
 
-* Vanilla JavaScript - No frameworks or libraries
-* Semantic HTML - Standard HTML structure
+The color system uses HSL values that can be customized by editing the source:
 
-## Plan
+```javascript
+const startingHue = 14;    // Orange-red starting point
+const maxHue = 255;        // Blue-violet ending point
+// Saturation: 57%, Lightness: 62%
+// Default opacity: 25%, Hover opacity: 100%
+```
 
-2. Modern JavaScript:
+Debug logging can be toggled:
+
+```javascript
+const debug = true; // Set to false to disable console logging
+```
+
+## Browser Support
+
+Compatible with all modern browsers that support:
+- ES6 const/let declarations
+- Arrow functions
+- Document.querySelector/querySelectorAll
+- addEventListener
+
+## API Reference
+
+### Warped.init()
+
+Initialize the warped theme system. Called automatically when DOM is ready.
+
+```javascript
+Warped.init();
+```
+
+### Warped.warpRainbowLinks(links)
+
+Apply rainbow gradient colors to a collection of links.
+
+**Parameters:**
+- `links` (NodeList|Array) - Collection of anchor elements to colorize
+
+**Example:**
+```javascript
+// Colorize all article links
+const articleLinks = document.querySelectorAll('article a');
+Warped.warpRainbowLinks(articleLinks);
+```
+
+### Warped.warpBranding()
+
+Add decorative brand bars to top and bottom of page.
+
+```javascript
+Warped.warpBranding();
+```
+
+### Warped._d(text)
+
+Debug logging function (internal use).
+
+**Parameters:**
+- `text` (string) - Message to log to console
+
+## Development
+
+### Future Improvements
 
 * Use template literals consistently (already used in one place)
 * Arrow functions for cleaner syntax
