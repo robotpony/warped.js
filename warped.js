@@ -27,7 +27,7 @@
       const bottomContainer = document.createElement("div");
       bottomContainer.innerHTML = brandBarElements;
       bottomContainer.classList.add("bottom", "warped-bar");
-      document.body.appendChild(bottomContainer, document.body);
+      document.body.appendChild(bottomContainer);
 
       this._d("w40 branding added");
     },
