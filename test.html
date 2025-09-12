@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warped.js Visual Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .warped-bar { text-align: center; margin: 10px 0; }
+        .flourish { display: inline-block; margin: 0 10px; }
+        .flourish hr { display: inline-block; width: 20px; margin: 0 2px; }
+        a { text-decoration: none; border-bottom: 2px solid; padding: 2px 4px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Warped.js Visual Test</h1>
+        <p class="description">This page tests the <a href="#">rainbow link colors</a> and <a href="#">brand flourishes</a>.</p>
+    </header>
+
+    <div class="test-section">
+        <h2>Test Article with Multiple Links</h2>
+        <article>
+            <p>This paragraph contains <a href="#">multiple</a> <a href="#">different</a> <a href="#">colored</a> links that should show rainbow gradients.</p>
+            
+            <ul>
+                <li>List item with <a href="#">first link</a></li>
+                <li>Another item with <a href="#">second link</a></li>
+                <li>Third item with <a href="#">third link</a></li>
+            </ul>
+
+            <p>More paragraph text with <a href="#">additional</a> <a href="#">test</a> <a href="#">links</a> for color verification.</p>
+        </article>
+    </div>
+
+    <div class="test-section">
+        <h2>Expected Results:</h2>
+        <ul>
+            <li>✓ Brand bars should appear at top and bottom of page</li>
+            <li>✓ Links should have different hue colors starting from orange (hue 14)</li>
+            <li>✓ Links should brighten on hover (opacity 0.25 → 1.0)</li>
+            <li>✓ Console should show "w40 theme starting" and "w40 theme installed"</li>
+            <li>✓ No global variables should be accessible</li>
+        </ul>
+    </div>
+
+    <script src="warped.js"></script>
+    
+    <script>
+        // Test that no globals are exposed
+        console.log('Global pollution test:');
+        console.log('typeof Warped:', typeof Warped); // Should be 'undefined'
+        console.log('typeof warpBranding:', typeof warpBranding); // Should be 'undefined'
+        console.log('typeof debug:', typeof debug); // Should be 'undefined'
+    </script>
+</body>
+</html>
