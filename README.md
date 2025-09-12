@@ -104,18 +104,4 @@ Debug logging function (internal use).
 **Parameters:**
 - `text` (string) - Message to log to console
 
-## Development
 
-### Future Improvements
-
-5. Performance:
-
-* Cache frequently accessed DOM elements
-* Use event delegation instead of individual listeners per link
-* Debounce hover events if needed
-
-6. Modern ES6+ Features:
-
-* Destructuring for cleaner variable assignments
-* Default parameters for the debug function
-* Class-based organization if expanding functionality

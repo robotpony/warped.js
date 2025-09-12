@@ -22,17 +22,14 @@
    */
   const Warped = {
     
-    // Cache for frequently accessed DOM elements
+    // Private properties using Symbol-like naming for better encapsulation
     _cache: {
       body: null,
       targetedLinks: null,
       initialized: false
     },
     
-    // Event delegation setup flag
     _eventDelegationSetup: false,
-    
-    // Debounce timeout storage for hover events
     _hoverDebounceTimeout: null,
     
     /**
@@ -42,19 +39,26 @@
     _initCache() {
       if (this._cache.initialized) return;
       
-      this._cache.body = document.body;
-      this._cache.targetedLinks = document.querySelectorAll(
+      const { body } = document;
+      const targetedLinks = document.querySelectorAll(
         "article p>a, article li>a, header p.description a"
       );
-      this._cache.initialized = true;
-      this._d(`Cached ${this._cache.targetedLinks?.length || 0} targeted links`);
+      
+      // Update cache with destructured values
+      Object.assign(this._cache, {
+        body,
+        targetedLinks,
+        initialized: true
+      });
+      
+      this._d(`Cached ${targetedLinks?.length || 0} targeted links`);
     },
     
     /**
      * Simple debounce utility for hover events
      * @private
      * @param {Function} func - Function to debounce
-     * @param {number} delay - Delay in milliseconds (default 16ms for ~60fps)
+     * @param {number} [delay=16] - Delay in milliseconds (default 16ms for ~60fps)
      * @returns {Function} Debounced function
      */
     _debounce(func, delay = 16) {
@@ -79,8 +83,9 @@
       const debouncedMouseover = this._debounce((target) => {
         try {
           const hoverColor = target.getAttribute("data-hue-hover");
-          if (hoverColor && target.style) {
-            target.style.borderBottomColor = hoverColor;
+          const { style } = target;
+          if (hoverColor && style) {
+            style.borderBottomColor = hoverColor;
           }
         } catch (error) {
           this._d(`Error in debounced mouseover handler: ${error.message}`, true);
@@ -90,8 +95,9 @@
       const debouncedMouseout = this._debounce((target) => {
         try {
           const defaultColor = target.getAttribute("data-hue");
-          if (defaultColor && target.style) {
-            target.style.borderBottomColor = defaultColor;
+          const { style } = target;
+          if (defaultColor && style) {
+            style.borderBottomColor = defaultColor;
           }
         } catch (error) {
           this._d(`Error in debounced mouseout handler: ${error.message}`, true);
@@ -99,17 +105,15 @@
       });
       
       // Single mouseover handler for all targeted links
-      this._cache.body.addEventListener("mouseover", (event) => {
-        const target = event.target;
-        if (target && target.matches && target.matches(targetSelector)) {
+      this._cache.body.addEventListener("mouseover", ({ target }) => {
+        if (target?.matches?.(targetSelector)) {
           debouncedMouseover(target);
         }
       });
       
       // Single mouseout handler for all targeted links
-      this._cache.body.addEventListener("mouseout", (event) => {
-        const target = event.target;
-        if (target && target.matches && target.matches(targetSelector)) {
+      this._cache.body.addEventListener("mouseout", ({ target }) => {
+        if (target?.matches?.(targetSelector)) {
           debouncedMouseout(target);
         }
       });
@@ -121,7 +125,7 @@
     /**
      * Debug logging with conditional output based on debug flag
      * @param {string} text - Message to log to console
-     * @param {boolean} forceLog - Override debug flag to force logging
+     * @param {boolean} [forceLog=false] - Override debug flag to force logging
      */
     _d(text, forceLog = false) {
       if (debug || forceLog) {
@@ -157,11 +161,12 @@
         topContainer.classList.add("top", "warped-bar");
         
         // Check for firstChild to avoid null reference
-        const firstChild = this._cache.body.firstChild;
+        const { body } = this._cache;
+        const { firstChild } = body;
         if (firstChild) {
-          this._cache.body.insertBefore(topContainer, firstChild);
+          body.insertBefore(topContainer, firstChild);
         } else {
-          this._cache.body.appendChild(topContainer);
+          body.appendChild(topContainer);
         }
 
         const bottomContainer = document.createElement("div");
@@ -172,7 +177,7 @@
         
         bottomContainer.innerHTML = brandBarElements;
         bottomContainer.classList.add("bottom", "warped-bar");
-        this._cache.body.appendChild(bottomContainer);
+        body.appendChild(bottomContainer);
 
         this._d("w40 branding added");
       } catch (error) {
@@ -284,15 +289,20 @@
     }
   };
 
-  // Auto-initialize when DOM is ready
-  try {
-    if (document && document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => Warped.init());
-    } else if (document) {
-      Warped.init();
+  // Auto-initialize when DOM is ready using modern async patterns
+  const initialize = () => {
+    try {
+      if (document?.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => Warped.init());
+      } else if (document) {
+        Warped.init();
+      }
+    } catch (error) {
+      console.error(`Error in warped.js auto-initialization: ${error.message}`);
     }
-  } catch (error) {
-    console.error(`Error in warped.js auto-initialization: ${error.message}`);
-  }
+  };
+  
+  // Execute initialization
+  initialize();
 
 })();
