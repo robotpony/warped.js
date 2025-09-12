@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warped.js Test Suite - CSS & JavaScript</title>
+    <link rel="stylesheet" href="warped.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Alumni+Sans+Pinstripe:wght@400;500;800&family=Lora:wght@100;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Test-specific styles */
+        :root {
+            --main-width: 700px;
+            --gap: 20px;
+            --primary: #007acc;
+            --content: #333;
+        }
+        
+        .test-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        
+        .test-title {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 600;
+            color: #007acc;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #007acc;
+            padding-bottom: 0.5rem;
+        }
+        
+        .test-description {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .js-test-result {
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 4px;
+            font-family: Monaco, monospace;
+            font-size: 0.9em;
+        }
+        
+        .js-test-pass {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .js-test-fail {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .dark {
+            background: #222;
+            color: #ddd;
+        }
+        
+        .dark .test-section {
+            background: #333;
+            border-color: #555;
+        }
+    </style>
+</head>
+<body id="top">
+    
+    <!-- Header Test Section -->
+    <header class="header header">
+        <nav>
+            <div class="logo">
+                <a href="/">WARPED.JS TEST</a>
+                <div class="logo-switches">
+                    <button onclick="toggleDarkMode()" style="padding: 0.25rem 0.5rem;">🌙</button>
+                </div>
+                <p class="tagline">
+                    <a href="#tests">Visual Test Suite</a>
+                </p>
+            </div>
+        </nav>
+        <div class="post-meta">CSS & JavaScript Test Cases • warped.js v1.0</div>
+    </header>
+
+    <main class="main">
+        
+        <!-- JavaScript Tests Section -->
+        <div class="test-section">
+            <h2 class="test-title">🔧 JavaScript Functionality Tests</h2>
+            <p class="test-description">Testing warped.js functions and initialization</p>
+            <div id="js-test-results"></div>
+            <button onclick="runJavaScriptTests()" style="padding: 0.5rem 1rem; margin-top: 1rem;">Run JS Tests</button>
+        </div>
+
+        <!-- CSS Typography Tests -->
+        <div class="test-section">
+            <h2 class="test-title">📝 Typography & Font Tests</h2>
+            <p class="test-description">Testing font families, weights, and text styling</p>
+            
+            <article class="post-single">
+                <header>
+                    <h1>Main Article Heading (Montserrat 600)</h1>
+                    <div class="post-meta">Article metadata styling</div>
+                </header>
+                
+                <div class="post-content">
+                    <p>This paragraph uses Lora serif font for body text. It should be readable with proper line height and font smoothing. <strong>This text is bold (weight 700)</strong>.</p>
+                    
+                    <h2>Subheading Level 2</h2>
+                    <h3>Subheading Level 3</h3>
+                    <h4>Subheading Level 4 (uppercase)</h4>
+                    <h5>Subheading Level 5 (uppercase)</h5>
+                    
+                    <blockquote>
+                        <p>This is a blockquote with italic styling and reduced opacity. It should have a left border in the theme color.</p>
+                    </blockquote>
+                </div>
+            </article>
+        </div>
+
+        <!-- CSS Link Styling Tests -->
+        <div class="test-section">
+            <h2 class="test-title">🔗 Link Styling Tests</h2>
+            <p class="test-description">Testing rainbow link colorization and hover effects</p>
+            
+            <article>
+                <p>These links should have rainbow colors applied by JavaScript: 
+                   <a href="#test1">Test Link 1</a>, 
+                   <a href="#test2">Test Link 2</a>, 
+                   <a href="#test3">Test Link 3</a>, 
+                   <a href="#test4">Test Link 4</a>, 
+                   <a href="#test5">Test Link 5</a>.
+                </p>
+                
+                <ul>
+                    <li><a href="#list1">List Link 1</a> - should also be colorized</li>
+                    <li><a href="#list2">List Link 2</a> - with different hue</li>
+                    <li><a href="#list3">List Link 3</a> - progressive colors</li>
+                </ul>
+                
+                <p>Hashtag test: <a href="#tag" class="hashtag">#webdev</a> <a href="#tag2" class="hashtag">#css</a></p>
+            </article>
+            
+            <header>
+                <p class="description p-note">
+                    Header description links should also be styled: <a href="#header-link">Header Link</a>
+                </p>
+            </header>
+        </div>
+
+        <!-- CSS Layout Tests -->
+        <div class="test-section">
+            <h2 class="test-title">📐 Layout & Structure Tests</h2>
+            <p class="test-description">Testing responsive layout, positioning, and structural elements</p>
+            
+            <div class="entry-content">
+                <p>This tests the entry content styling used in list views.</p>
+            </div>
+            
+            <footer class="footer">
+                <span class="kudos">Footer kudos styling test</span>
+            </footer>
+        </div>
+
+        <!-- CSS List Styling Tests -->
+        <div class="test-section">
+            <h2 class="test-title">📋 List Styling Tests</h2>
+            <p class="test-description">Testing custom dash-style lists</p>
+            
+            <article>
+                <ul>
+                    <li>This list should use dash prefixes instead of bullets</li>
+                    <li>Each item should have proper text indent</li>
+                    <li>Spacing should be consistent</li>
+                    <li>No traditional list-style bullets should appear</li>
+                </ul>
+                
+                <ul class="post-tags">
+                    <li><a href="#tag1">tag1</a></li>
+                    <li><a href="#tag2">tag2</a></li>
+                    <li><a href="#tag3">tag3</a></li>
+                </ul>
+            </article>
+        </div>
+
+        <!-- CSS Code Highlighting Tests -->
+        <div class="test-section">
+            <h2 class="test-title">💻 Code Syntax Highlighting Tests</h2>
+            <p class="test-description">Testing Chroma syntax highlighting styles</p>
+            
+            <div class="post-content">
+                <div class="highlight">
+                    <pre class="chroma"><code class="language-javascript"><span class="c1">// JavaScript code example</span>
+<span class="kd">function</span> <span class="nx">testFunction</span><span class="p">(</span><span class="nx">param</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">variable</span> <span class="o">=</span> <span class="s2">"string value"</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">param</span> <span class="o">+</span> <span class="mi">42</span><span class="p">;</span>
+<span class="p">}</span></code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- CSS Pagination Tests -->
+        <div class="test-section">
+            <h2 class="test-title">📄 Pagination Styling Tests</h2>
+            <p class="test-description">Testing pagination link styles</p>
+            
+            <nav class="pagination">
+                <a href="#prev">← Previous</a>
+                <a href="#next">Next →</a>
+            </nav>
+        </div>
+
+        <!-- CSS Responsive Tests -->
+        <div class="test-section">
+            <h2 class="test-title">📱 Responsive Design Tests</h2>
+            <p class="test-description">Resize browser to test mobile styles (480px breakpoint)</p>
+            
+            <p>At mobile sizes, logo letter-spacing should reduce and logo switches should reposition.</p>
+        </div>
+
+        <!-- Brand Bar Visual Test -->
+        <div class="test-section">
+            <h2 class="test-title">🎨 Brand Bar Visual Test</h2>
+            <p class="test-description">Check top and bottom of page for colored brand bars</p>
+            <p>The warped brand bars should appear at the very top (15px height) and bottom (5px height) of the viewport with rainbow colored flourishes on left and right sides.</p>
+        </div>
+
+    </main>
+
+    <script src="warped.js"></script>
+    <script>
+        // Test Suite JavaScript
+        let testResults = [];
+        
+        function addTestResult(testName, passed, details = '') {
+            testResults.push({
+                name: testName,
+                passed: passed,
+                details: details
+            });
+        }
+        
+        function displayTestResults() {
+            const resultsContainer = document.getElementById('js-test-results');
+            resultsContainer.innerHTML = '';
+            
+            testResults.forEach(result => {
+                const div = document.createElement('div');
+                div.className = `js-test-result ${result.passed ? 'js-test-pass' : 'js-test-fail'}`;
+                div.innerHTML = `
+                    <strong>${result.passed ? '✓ PASS' : '✗ FAIL'}</strong>: ${result.name}
+                    ${result.details ? `<br><small>${result.details}</small>` : ''}
+                `;
+                resultsContainer.appendChild(div);
+            });
+        }
+        
+        function runJavaScriptTests() {
+            testResults = [];
+            
+            // Test 1: Check if Warped object exists (from IIFE)
+            try {
+                // Test brand bars exist
+                const topBar = document.querySelector('.top.warped-bar');
+                const bottomBar = document.querySelector('.bottom.warped-bar');
+                addTestResult('Brand bars created', topBar && bottomBar, 
+                    `Found top bar: ${!!topBar}, bottom bar: ${!!bottomBar}`);
+            } catch (e) {
+                addTestResult('Brand bars created', false, `Error: ${e.message}`);
+            }
+            
+            // Test 2: Check brand bar structure
+            try {
+                const flourishes = document.querySelectorAll('.warped-bar .flourish');
+                addTestResult('Brand bar flourishes', flourishes.length >= 2, 
+                    `Found ${flourishes.length} flourish elements (expected: 4)`);
+            } catch (e) {
+                addTestResult('Brand bar flourishes', false, `Error: ${e.message}`);
+            }
+            
+            // Test 3: Check rainbow link colorization
+            try {
+                const colorizedLinks = document.querySelectorAll('article p>a[data-hue], article li>a[data-hue], header p.description a[data-hue]');
+                addTestResult('Rainbow links colorized', colorizedLinks.length > 0, 
+                    `Found ${colorizedLinks.length} colorized links`);
+            } catch (e) {
+                addTestResult('Rainbow links colorized', false, `Error: ${e.message}`);
+            }
+            
+            // Test 4: Check link HSL color attributes
+            try {
+                const firstLink = document.querySelector('article p>a[data-hue]');
+                if (firstLink) {
+                    const hue = firstLink.getAttribute('data-hue');
+                    const hueHover = firstLink.getAttribute('data-hue-hover');
+                    const isValidHSL = hue && hue.includes('hsla(') && hueHover && hueHover.includes('hsla(');
+                    addTestResult('HSL color attributes', isValidHSL, 
+                        `Default: ${hue}, Hover: ${hueHover}`);
+                } else {
+                    addTestResult('HSL color attributes', false, 'No colorized links found');
+                }
+            } catch (e) {
+                addTestResult('HSL color attributes', false, `Error: ${e.message}`);
+            }
+            
+            // Test 5: Test link hover functionality
+            try {
+                const testLink = document.querySelector('article p>a[data-hue]');
+                if (testLink) {
+                    const originalColor = testLink.style.borderBottomColor;
+                    
+                    // Simulate mouseover
+                    const mouseOverEvent = new MouseEvent('mouseover', { bubbles: true });
+                    testLink.dispatchEvent(mouseOverEvent);
+                    const hoverColor = testLink.style.borderBottomColor;
+                    
+                    // Simulate mouseout
+                    const mouseOutEvent = new MouseEvent('mouseout', { bubbles: true });
+                    testLink.dispatchEvent(mouseOutEvent);
+                    const finalColor = testLink.style.borderBottomColor;
+                    
+                    const hoverWorked = hoverColor !== originalColor;
+                    addTestResult('Link hover functionality', hoverWorked, 
+                        `Original: ${originalColor}, Hover: ${hoverColor}, Final: ${finalColor}`);
+                } else {
+                    addTestResult('Link hover functionality', false, 'No test link available');
+                }
+            } catch (e) {
+                addTestResult('Link hover functionality', false, `Error: ${e.message}`);
+            }
+            
+            // Test 6: Check CSS custom properties
+            try {
+                const rootStyles = getComputedStyle(document.documentElement);
+                const warpedBlue = rootStyles.getPropertyValue('--warped-blue').trim();
+                const warpedGreen = rootStyles.getPropertyValue('--warped-green').trim();
+                addTestResult('CSS custom properties', warpedBlue && warpedGreen, 
+                    `--warped-blue: ${warpedBlue}, --warped-green: ${warpedGreen}`);
+            } catch (e) {
+                addTestResult('CSS custom properties', false, `Error: ${e.message}`);
+            }
+            
+            // Test 7: Font loading
+            try {
+                const headerFont = getComputedStyle(document.querySelector('header nav div.logo > a')).fontFamily;
+                const bodyFont = getComputedStyle(document.querySelector('.post-content p')).fontFamily;
+                const fontsLoaded = headerFont.includes('Montserrat') && bodyFont.includes('Lora');
+                addTestResult('Font families loaded', fontsLoaded, 
+                    `Header: ${headerFont}, Body: ${bodyFont}`);
+            } catch (e) {
+                addTestResult('Font families loaded', false, `Error: ${e.message}`);
+            }
+            
+            displayTestResults();
+        }
+        
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+        }
+        
+        // Auto-run tests after a short delay to ensure everything is loaded
+        setTimeout(runJavaScriptTests, 1000);
+    </script>
+</body>
+</html>
