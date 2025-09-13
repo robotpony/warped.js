@@ -14,13 +14,16 @@
     --code-bg: #444;
     --code-text: #f8f8f2;
     --home-bg: rgb(245, 245, 245);
+    --button-bg: rgb(245, 245, 245);
 }
-
 footer.footer .kudos {
     color: var(--kudos-color);
 }
 .dark footer.footer .kudos {
     color: var(--kudos-color-dark);
+}
+main article.draft {
+    display: none;
 }
 
 header.header.header {
@@ -42,6 +45,19 @@ header nav div.logo > a {
     font-size: 1.75em;
     line-height: 1.5em;
 }
+span.entry-hint {
+    position: absolute;
+    height: 24px;
+    left: -128px;
+    opacity: .5;
+}
+span.entry-hint svg {
+    position: relative;
+    top: 4px;
+    width: 32px;
+    height: 32px;
+}
+
 header nav div.logo div.logo-switches {
     position: absolute;
     right: 10px;
@@ -125,11 +141,77 @@ header .post-meta > span {
     text-align: left;
 }
 
+.post-content .post-image {
+    position: relative;
+    top: -.5em;
+    float: right;
+    width: 164px;
+    margin: 0 .5em .5em;
+    padding: 0 .25em .25em;
+}
+.post-content sup { 
+    vertical-align:top; padding-left: .15em; 
+    line-height:100%; 
+}
+.post-content sup > a {
+    box-shadow: none;
+    font-size: .7em;
+    font-weight: bold;    
+}
+div.footnotes {
+    margin-top: 3em;
+}
+
+.post-content .grouped {
+    margin: 0; padding: 0; width: 100%;
+    margin-bottom: 1em;
+    
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+.post-content .grouped:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.post-content .callout.right {
+    width: 50%;
+    float: right;
+    padding-left: .5em;
+
+}
+.post-content .callout.left {
+    width: 50%;
+    padding-right: .5em;
+    float: left;
+}
+.post-content .grouped .callout h2,
+.post-content .grouped .callout h3,
+.post-content .grouped .callout p {
+    font-family: "Montserrat", sans-serif;
+    font-size: .8em;
+    font-weight: 400;
+}
+.post-content .grouped .callout p strong {
+    font-weight: 700 !important;
+}
+.post-content .grouped .callout h2,
+.post-content .grouped .callout h3,
+.post-content .grouped .callout h4,
+.post-content .grouped .callout h5 {
+    font-style: italic;
+    font-weight: 200;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .35em;
+}
+
 .post-content dl,
 .post-content ol,
 .post-content p,
 .post-content figure,
 .post-content ul,
+.post-content td,
 .first-entry .entry-content p,
 .post-entry .entry-content p {
     font-family: "Lora", serif;
@@ -163,6 +245,31 @@ body.list main.main .entry-content {
     font-style: italic;
     opacity: 0.65;
 }
+
+.post-content td, 
+.post-content tr {
+    text-align: left;
+    vertical-align: top;
+    font-size: .9em;
+}
+.post-content table {
+    width: 100%;
+}
+.post-content table thead tr th {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: .8em;
+}
+.post-content div.goat svg {
+    /*font-size: .3em !important;*/
+    font-family: monospace;
+}
+/* Special empty-paragraph hack for a simple mono-diagram */
+/* p:not(:empty):has(code) {
+    font-size: 1.25em;
+    text-align: center;
+} */
+
 main.main > header h1,
 main.main > article h1,
 main.main > article h2,
@@ -189,6 +296,7 @@ main.main > article > header.post-header h1 {
     font-size: 1.3em;
     font-weight: 600;
     margin-bottom: -0.2em;
+    text-align: center;
     opacity: 0.95 !important;
     text-align: center;
 }
@@ -222,12 +330,20 @@ main.main > article h5 {
 }
 ul.post-tags ul li {
     list-style-type: none;
+    line-height: 1em;
 }
 article ul.post-tags li:before {
     content: "" !important;
 }
 ul.post-tags li a {
-    font-size: 0.7em;
+    font-size: 0.6em;
+    font-family: monospace;
+    text-transform: uppercase;
+    color: var(--secondary);
+    background-color: var(--button-bg);
+}
+ul.post-tags li a:before {
+    content: "#";
 }
 .pagination a {
     font-family: "Alumni Sans Pinstripe", serif;
@@ -292,6 +408,7 @@ article li > a:active {
     -o-transition: all 200ms ease-out;
     transition: all 200ms ease-out;
     border-bottom: 4px solid rgba(104, 159, 214, 0.35);
+    transition: border 200ms ease-in-out;
     border-bottom-style: solid;
     text-decoration: none !important;
     box-shadow: none !important;
@@ -325,6 +442,9 @@ article ul > li:before {
     text-indent: -5px;
 }
 
+body#post p {
+}
+.post-content p > img,
 body#post p > img {
     display: block;
     width: auto;
@@ -401,9 +521,14 @@ body#post p > img {
     max-width: auto;
 }
 
+.post-content code {
+    font-size: .85em;
+    background: var(--code-text);
+    color: var(--code-bg);
+}
 /* Warped grams (code-only paragraphs styled as mini diagrams) */
 .post-content .code-gram {
-    width: 100%;
+    width: 90%;
     text-align: center;
     margin: 1.5em 0;
     padding: 0.75em 0;
@@ -412,11 +537,6 @@ body#post p > img {
 
 .post-content .code-gram code {
     font-size: clamp(1rem, 4cqi, 3rem);
-}
-
-.dark .post-content .code-gram code {
-    border-color: var(--link-hover-dark);
-    color: var(--warped-blue);
 }
 
 @media screen and (max-width: 480px) {
@@ -458,12 +578,16 @@ body#post p > img {
     color: var(--code-text);
 }
 /* Other */
+.chroma .x {
+}
 /* Error */
 .chroma .err {
     color: #960050;
     background-color: #1e0010;
 }
 /* CodeLine */
+.chroma .cl {
+}
 /* LineLink */
 .chroma .lnlinks {
     outline: none;
