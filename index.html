@@ -127,6 +127,14 @@
             background: #2a2a2a;
             border-color: var(--primary);
         }
+
+        .main {
+            position: relative;
+            min-height: calc(100vh - var(--header-height) - var(--footer-height));
+            max-width: calc(var(--main-width) + var(--gap) * 2);
+            margin: auto;
+            padding: var(--gap);
+        }
     </style>
 </head>
 <body id="top" class="list test-page">
@@ -148,6 +156,11 @@
     </header>
 
     <main class="main">
+        <header class="page-header">
+        <h1>
+            Homepage H1 test
+        </h1>
+        </header>
 
         <div class="post-content">
             <p>Welcome to the warped.js testing page.</p>
@@ -272,6 +285,29 @@
             </div>
         </article>
 
+        <hr/><br/>
+
+        <!-- Warped grams  -->
+        <article class="post-single grams-test">
+            <header>
+                <h1>Let's test a few grams</h1>
+                <div class="post-meta">March 20, 2024 • 15 min read • <a href="#javascript">JavaScript</a>, <a href="#modules">Modules</a>, <a href="#architecture">Architecture</a></div>
+            </header>
+            
+            <div class="post-content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Modern JavaScript development relies heavily on <a href="#es6-modules">ES6 modules</a>, <a href="#commonjs">CommonJS</a>, and various <a href="#bundling-tools">bundling tools</a> to create maintainable applications.</p>
+                
+                <h2>This is another section</h2>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. The journey from <a href="#iife">IIFE patterns</a> to <a href="#amd">AMD</a> and finally to <a href="#es-modules">ES modules</a> represents a significant shift in how we structure JavaScript applications.</p>
+                
+                <!-- example simple diagram -->
+                <p><code>Novel → Expensive → Common → Invisible</code></p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. The journey from <a href="#iife">IIFE patterns</a> to <a href="#amd">AMD</a> and finally to <a href="#es-modules">ES modules</a> represents a significant shift in how we structure JavaScript applications.</p>
+                <p>This is a regular non-gram block with some <code>code</code></p>
+            </div> 
+        </article>
+
+
         <!-- Archive Section -->
         <section>
             <h2>Archive</h2>
@@ -291,6 +327,7 @@
                 </li>
             </ul>
         </section>
+     
         
         <!-- Category Section -->
         <section>
@@ -346,6 +383,12 @@
 
     </main>
 
+    <script>
+        // Configure warped.js for testing - disable debounce for reliable tests
+        window.WarpedConfig = {
+            debounceDelay: 0  // Disable debounce for immediate hover response in tests
+        };
+    </script>
     <script src="warped.js"></script>
     <script>
         // Test Suite JavaScript

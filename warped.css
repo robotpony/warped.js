@@ -391,6 +391,24 @@ body#post p > img {
     max-width: auto;
 }
 
+/* Warped grams (code-only paragraphs styled as mini diagrams) */
+.post-content .code-gram {
+    width: 100%;
+    text-align: center;
+    margin: 1.5em 0;
+    padding: 0.75em 0;
+    container-type: inline-size; 
+}
+
+.post-content .code-gram code {
+    font-size: clamp(1rem, 4cqi, 3rem);
+}
+
+.dark .post-content .code-gram code {
+    border-color: var(--link-hover-dark);
+    color: var(--warped-blue);
+}
+
 @media screen and (max-width: 480px) {
     header nav div.logo > a {
         letter-spacing: 1px;

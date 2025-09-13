@@ -1,18 +1,27 @@
 (function() {
   'use strict';
   
-  // Configuration and state
-  const debug = true; // Set to false to disable console logging
-  
-  // Color system constants
-  const COLOR_CONFIG = {
-    STARTING_HUE: 14,        // Orange-red starting point
-    MAX_HUE: 255,            // Blue-violet ending point
-    SATURATION: 57,          // Saturation percentage
-    LIGHTNESS: 62,           // Lightness percentage
-    DEFAULT_OPACITY: 0.25,   // Default opacity (25%)
-    HOVER_OPACITY: 1         // Hover opacity (100%)
+  // Default configuration - can be overridden by window.WarpedConfig
+  const defaultConfig = {
+    debug: true,
+    brandColours: {
+      STARTING_HUE: 14,        // Orange-red starting point
+      MAX_HUE: 255,            // Blue-violet ending point
+      SATURATION: 57,          // Saturation percentage
+      LIGHTNESS: 62,           // Lightness percentage
+      DEFAULT_OPACITY: 0.25,   // Default opacity (25%)
+      HOVER_OPACITY: 1         // Hover opacity (100%)
+    },
+    selectors: "article p>a, article li>a, header p.description a",
+    enableBranding: true,
+    enableCodeGrams: true,     // Enable automatic code-gram detection and styling
+    debounceDelay: 16          // Hover debounce delay in milliseconds (0 to disable)
   };
+
+  // Merge user config with defaults
+  const config = Object.assign({}, defaultConfig, window.WarpedConfig || {});
+  const debug = config.debug;
+  const BRAND_COLOURS = Object.assign({}, defaultConfig.brandColours, config.brandColours || {});
   
   /**
    * Namespace object containing all warped.js functionality for weblog theming
@@ -40,9 +49,7 @@
       if (this._cache.initialized) return;
       
       const { body } = document;
-      const targetedLinks = document.querySelectorAll(
-        "article p>a, article li>a, header p.description a"
-      );
+      const targetedLinks = document.querySelectorAll(config.selectors);
       
       // Update cache with destructured values
       Object.assign(this._cache, {
@@ -77,10 +84,10 @@
       if (this._eventDelegationSetup || !this._cache.body) return;
       
       // Target selector for event delegation
-      const targetSelector = "article p>a, article li>a, header p.description a";
+      const targetSelector = config.selectors;
       
-      // Create debounced hover handlers for smooth performance
-      const debouncedMouseover = this._debounce((target) => {
+      // Create hover handlers (debounced for performance if delay > 0)
+      const mouseoverHandler = (target) => {
         try {
           const hoverColor = target.getAttribute("data-hue-hover");
           const { style } = target;
@@ -88,11 +95,11 @@
             style.borderBottomColor = hoverColor;
           }
         } catch (error) {
-          this._d(`Error in debounced mouseover handler: ${error.message}`, true);
+          this._d(`Error in mouseover handler: ${error.message}`, true);
         }
-      });
+      };
       
-      const debouncedMouseout = this._debounce((target) => {
+      const mouseoutHandler = (target) => {
         try {
           const defaultColor = target.getAttribute("data-hue");
           const { style } = target;
@@ -100,9 +107,12 @@
             style.borderBottomColor = defaultColor;
           }
         } catch (error) {
-          this._d(`Error in debounced mouseout handler: ${error.message}`, true);
+          this._d(`Error in mouseout handler: ${error.message}`, true);
         }
-      });
+      };
+      
+      const debouncedMouseover = config.debounceDelay > 0 ? this._debounce(mouseoverHandler, config.debounceDelay) : mouseoverHandler;
+      const debouncedMouseout = config.debounceDelay > 0 ? this._debounce(mouseoutHandler, config.debounceDelay) : mouseoutHandler;
       
       // Single mouseover handler for all targeted links
       this._cache.body.addEventListener("mouseover", ({ target }) => {
@@ -186,6 +196,81 @@
     },
 
     /**
+     * Apply code-gram styling to paragraphs containing only code elements
+     * Searches for <p> elements within .post-content that contain only <code> elements
+     */
+    warpCodeGrams() {
+      // Initialize cache if not already done
+      this._initCache();
+      
+      // Validate that document.body exists
+      if (!this._cache.body) {
+        this._d("Error: document.body not found, cannot process code grams", true);
+        return;
+      }
+
+      try {
+        // Find all paragraphs within .post-content blocks
+        const postContentBlocks = document.querySelectorAll('.post-content');
+        let totalCodeGrams = 0;
+
+        postContentBlocks.forEach(contentBlock => {
+          const paragraphs = contentBlock.querySelectorAll('p');
+          
+          paragraphs.forEach(paragraph => {
+            // Check if paragraph contains only code element(s) and whitespace
+            const hasOnlyCodeContent = this._isCodeOnlyParagraph(paragraph);
+            
+            if (hasOnlyCodeContent) {
+              paragraph.classList.add('code-gram');
+              totalCodeGrams++;
+              this._d(`Added code-gram class to paragraph: "${paragraph.textContent.trim().substring(0, 50)}..."`);
+            }
+          });
+        });
+
+        this._d(`Code grams processed: ${totalCodeGrams} paragraphs marked`);
+      } catch (error) {
+        this._d(`Error processing code grams: ${error.message}`, true);
+      }
+    },
+
+    /**
+     * Check if a paragraph element contains only code elements and whitespace
+     * @private
+     * @param {Element} paragraph - The paragraph element to check
+     * @returns {boolean} True if paragraph contains only code elements
+     */
+    _isCodeOnlyParagraph(paragraph) {
+      if (!paragraph || !paragraph.childNodes) {
+        return false;
+      }
+
+      let hasCodeElement = false;
+      
+      // Check each child node
+      for (const node of paragraph.childNodes) {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          // If it's an element, it must be a <code> element
+          if (node.tagName.toLowerCase() === 'code') {
+            hasCodeElement = true;
+          } else {
+            // Any non-code element disqualifies it
+            return false;
+          }
+        } else if (node.nodeType === Node.TEXT_NODE) {
+          // Text nodes must be empty or only whitespace
+          if (node.textContent.trim() !== '') {
+            return false;
+          }
+        }
+        // Ignore other node types (comments, etc.)
+      }
+      
+      return hasCodeElement;
+    },
+
+    /**
      * Apply rainbow gradient colors to a collection of links with hover effects
      * Distributes HSL colors evenly across all provided links
      * @param {NodeList|Array} links - Collection of anchor elements to colorize
@@ -211,7 +296,7 @@
       }
 
       try {
-        const { STARTING_HUE, MAX_HUE, SATURATION, LIGHTNESS, DEFAULT_OPACITY, HOVER_OPACITY } = COLOR_CONFIG;
+        const { STARTING_HUE, MAX_HUE, SATURATION, LIGHTNESS, DEFAULT_OPACITY, HOVER_OPACITY } = BRAND_COLOURS;
         let hue = STARTING_HUE;
         // Calculate even distribution of colors across all links
         const increment = Math.round((MAX_HUE - STARTING_HUE) / totalLinks);
@@ -279,8 +364,15 @@
           this._d("Warning: No targeted links found in cache", true);
         }
 
-        // Add decorative brand flourishes
-        this.warpBranding();
+        // Add decorative brand flourishes if enabled
+        if (config.enableBranding) {
+          this.warpBranding();
+        }
+
+        // Process code grams if enabled
+        if (config.enableCodeGrams) {
+          this.warpCodeGrams();
+        }
 
         this._d("w40 theme installed");
       } catch (error) {
