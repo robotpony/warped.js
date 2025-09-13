@@ -13,6 +13,7 @@
     --warped-red: #d68168;
     --code-bg: #444;
     --code-text: #f8f8f2;
+    --home-bg: rgb(245, 245, 245);
 }
 
 footer.footer .kudos {
@@ -115,6 +116,11 @@ header .post-meta {
     color: #000;
     opacity: 1;
 }
+header .post-meta > span {
+    display: block; 
+    text-align: center;
+    width: 100%;
+}
 .entry-footer {
     text-align: left;
 }
@@ -171,6 +177,9 @@ main.main > article h5 {
     opacity: 1 !important;
     letter-spacing: -1px;
 }
+body.list {
+    background: var(--home-bg);
+}
 body.list main.main > article h1,
 body.list main.main > article h2 {
     margin-top: 0em;
@@ -181,6 +190,7 @@ main.main > article > header.post-header h1 {
     font-weight: 600;
     margin-bottom: -0.2em;
     opacity: 0.95 !important;
+    text-align: center;
 }
 body.list main.main > article {
     position: relative;
