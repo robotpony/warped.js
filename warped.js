@@ -394,7 +394,5 @@
     }
   };
   
-  // Execute initialization
   initialize();
-
 })();

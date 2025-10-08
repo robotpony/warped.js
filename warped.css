@@ -451,7 +451,10 @@ body#post p > img {
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
+    position: relative;
+    left: -4px;
 }
+
 
 /* Warped branding (top and bottom bars) */
 .top.warped-bar,
@@ -520,6 +523,9 @@ body#post p > img {
     padding: 0;
     max-width: auto;
 }
+.post-content pre code { 
+    font-size: .75em;
+}
 
 .post-content code {
     font-size: .85em;
@@ -560,6 +566,11 @@ body#post p > img {
     header nav div.logo p.tagline {
         font-size: 0.75em;
     }
+
+    .post-content p > img {
+        left: 0;
+    }
+
 }
 
 /* Code markup */
