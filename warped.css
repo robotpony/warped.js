@@ -444,6 +444,7 @@ article ul > li:before {
 
 body#post p {
 }
+
 .post-content p > img,
 body#post p > img {
     display: block;
@@ -451,6 +452,9 @@ body#post p > img {
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
+}
+
+.post-content > img {
     position: relative;
     left: -4px;
 }
@@ -544,6 +548,13 @@ body#post p > img {
 .post-content .code-gram code {
     font-size: clamp(1rem, 4cqi, 3rem);
 }
+.post-content .language-qgraph {
+    font-size: 110%;
+    opacity: .75;
+    background-color: rgb(245, 244, 237) !important;
+    color: rgb(17, 17, 17);
+    border: 1px solid rgba(31, 30, 29, 0.15);
+}
 
 @media screen and (max-width: 480px) {
     header nav div.logo > a {
@@ -567,10 +578,9 @@ body#post p > img {
         font-size: 0.75em;
     }
 
-    .post-content p > img {
+    .post-content > img {
         left: 0;
     }
-
 }
 
 /* Code markup */
