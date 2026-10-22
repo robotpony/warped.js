@@ -3,7 +3,7 @@
   
   // Default configuration - can be overridden by window.WarpedConfig
   const defaultConfig = {
-    debug: true,
+    debug: false,
     brandColours: {
       STARTING_HUE: 14,        // Orange-red starting point
       MAX_HUE: 255,            // Blue-violet ending point
