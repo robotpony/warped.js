@@ -43,7 +43,7 @@ warped.js automatically targets specific elements in your HTML:
 * **Decorative Brand Bars** - Adds flourish elements to top and bottom of page
 * **Warped Grams** - Automatically styles code-only paragraphs as centered mini diagrams
 * **Automatic Color Distribution** - Evenly distributes colors across all links
-* **Selective Targeting** - Only affects `article p>a`, `article li>a`, and `header p.description a`
+* **Selective Targeting** - Only affects links in `article p`, `article li` (including inside em/strong, but not footnote refs or code), and `header p.description a`
 * **Zero Dependencies** - Pure vanilla JavaScript implementation
 * **Semantic HTML** - Enhances existing structure without breaking it
 

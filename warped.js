@@ -12,7 +12,8 @@
       DEFAULT_OPACITY: 0.25,   // Default opacity (25%)
       HOVER_OPACITY: 1         // Hover opacity (100%)
     },
-    selectors: "article p>a, article li>a, header p.description a",
+    // Descendant selectors so links inside em/strong count; skip footnote refs and code
+    selectors: "article p a:not(sup a, code a), article li a:not(sup a, code a), header p.description a",
     enableBranding: true,
     enableCodeGrams: true,     // Enable automatic code-gram detection and styling
     debounceDelay: 16          // Hover debounce delay in milliseconds (0 to disable)
@@ -116,15 +117,17 @@
       
       // Single mouseover handler for all targeted links
       this._cache.body.addEventListener("mouseover", ({ target }) => {
-        if (target?.matches?.(targetSelector)) {
-          debouncedMouseover(target);
+        const link = target?.closest?.(targetSelector);
+        if (link) {
+          debouncedMouseover(link);
         }
       });
       
       // Single mouseout handler for all targeted links
       this._cache.body.addEventListener("mouseout", ({ target }) => {
-        if (target?.matches?.(targetSelector)) {
-          debouncedMouseout(target);
+        const link = target?.closest?.(targetSelector);
+        if (link) {
+          debouncedMouseout(link);
         }
       });
       

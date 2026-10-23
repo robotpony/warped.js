@@ -509,12 +509,9 @@ body#subpage h3 {
 /* Branded links */
 .description.p-note a,
 .description.p-note a:active,
-article p > a,
-article p > a:active,
-article p > a span,
-article p > a:active span,
-article li > a,
-article li > a:active {
+article p a:not(sup a, code a),
+article p a:not(sup a, code a) span,
+article li a:not(sup a, code a) {
     -webkit-transition: all 200ms ease-out;
     -moz-transition: all 200ms ease-out;
     -o-transition: all 200ms ease-out;

@@ -442,7 +442,7 @@
             
             // Test 3: Check rainbow link colorization
             try {
-                const colorizedLinks = document.querySelectorAll('article p>a[data-hue], article li>a[data-hue], header p.description a[data-hue]');
+                const colorizedLinks = document.querySelectorAll('a[data-hue]');
                 addTestResult('Rainbow links colorized', colorizedLinks.length > 0, 
                     `Found ${colorizedLinks.length} colorized links`);
             } catch (e) {
@@ -451,7 +451,7 @@
             
             // Test 4: Check link HSL color attributes
             try {
-                const firstLink = document.querySelector('article p>a[data-hue]');
+                const firstLink = document.querySelector('article p a[data-hue]');
                 if (firstLink) {
                     const hue = firstLink.getAttribute('data-hue');
                     const hueHover = firstLink.getAttribute('data-hue-hover');
@@ -467,7 +467,7 @@
             
             // Test 5: Test link hover functionality
             try {
-                const testLink = document.querySelector('article p>a[data-hue]');
+                const testLink = document.querySelector('article p a[data-hue]');
                 if (testLink) {
                     const originalColor = testLink.style.borderBottomColor;
                     

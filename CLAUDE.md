@@ -19,7 +19,7 @@ warped.js is a single-file vanilla JavaScript library for weblog theming and vis
 - Rainbow link colorization (`warpRainbowLinks`) - applies HSL gradient colors to links
 - Code grams (`warpCodeGrams`) - detects and styles code-only paragraphs as mini diagrams
 - Global configuration system via `window.WarpedConfig` object
-- Automatic initialization targeting specific selectors: `article p>a`, `article li>a`, `header p.description a`
+- Automatic initialization targeting specific selectors: `article p a`, `article li a` (excluding `sup a` and `code a`), `header p.description a`
 
 **Color System:**
 - Uses HSL color space for smooth gradients
