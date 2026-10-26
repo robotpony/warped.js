@@ -90,6 +90,12 @@ Compatible with all modern browsers that support:
 - Document.querySelector/querySelectorAll
 - addEventListener
 
+## Roadmap: shared core
+
+warped.js is used on warpedvisions.org today. Future releases will move a few general behaviours into a separate `core/warped-core.{js,css}` that Bruce's other sites (bruce-loves-to-cook.ca, space-command.ca) can use too. Those behaviours are configurable accent links, the brand stripe, a popover placer and a `<details>` close helper. The core shares code only; each site keeps its own markup, styling and colours and passes them in as config. Link colours will accept a constant, a list of colour stops, or a function `(index, total, link) => colour`. Existing config keys keep working.
+
+Nothing is built yet. See [docs/proposals/2026-10-26-shared-warped-core.md](docs/proposals/2026-10-26-shared-warped-core.md).
+
 ## API Reference
 
 ### Warped.init()

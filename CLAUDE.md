@@ -45,3 +45,11 @@ warped.js is a single-file vanilla JavaScript library for weblog theming and vis
 - Cached DOM selectors and error handling
 - External configuration via `window.WarpedConfig`
 - Configurable features (branding, code grams, selectors, colors, debug mode)
+
+## Direction: shared core (accepted 2026-10-26, not built)
+
+See `docs/proposals/2026-10-26-shared-warped-core.md`. When a release touches links, brand bars, popovers or details menus, build that piece into `core/warped-core.{js,css}` (two files, separate from warped.{js,css}), keeping w42's look unchanged by default.
+- Shared code only: the core MUST NOT set colours, fonts or markup conventions, or reference PaperMod, Blowfish or fugu markup.
+- Link colours are configurable: a constant, colour stops, or `(index, total, link) => colour`.
+- No versioned URLs; other sites track main, so config keys are only ever added and defaults never change.
+- Code grams, fonts and the w42 theme CSS stay out of the core.
